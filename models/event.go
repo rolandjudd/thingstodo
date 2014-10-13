@@ -6,8 +6,8 @@ import "fmt"
 type Event struct {
 	eventID     int
 	createdBy   int
-	eventLat    float
-	eventLon    float
+	eventLat    float32
+	eventLon    float32
 	title       string
 	description string
 	//score int
@@ -29,19 +29,19 @@ func (e *Event) SetCreatedBy(createdBy int) {
 	e.createdBy = createdBy
 }
 
-func (e Event) EventLat() float {
+func (e Event) EventLat() float32 {
 	return e.eventLat
 }
 
-func (e *Event) SetEventLat(eventLat float) {
+func (e *Event) SetEventLat(eventLat float32) {
 	e.eventLat = eventLat
 }
 
-func (e Event) EventLon() float {
+func (e Event) EventLon() float32 {
 	return e.eventLon
 }
 
-func (e *Event) SetEventLon(eventLon float) {
+func (e *Event) SetEventLon(eventLon float32) {
 	e.eventLon = eventLon
 }
 
