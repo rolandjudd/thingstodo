@@ -6,7 +6,8 @@
     "jquery": "~2.1.0",
     "lodash": "~2.4.1",
     "backbone": "~1.1.0",
-    "modernizr": "~2.7.1"
+    "modernizr": "~2.7.1",
+    "bootstrap-material-design": "~0.1.0"
   },
   "devDependencies": {}
 }
