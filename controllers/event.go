@@ -1,13 +1,15 @@
 package controllers
 
+import "github.com/go-martini/martini"
 import "github.com/codegangsta/martini-contrib/render"
+
 import "gopkg.in/mgo.v2"
 import "gopkg.in/mgo.v2/bson"
+
 import "thingstodo/models"
 
-func GetAllEvents(db *mgo.Database, r render.Render)  {
+func GetAllEvents(db *mgo.Database, r render.Render) {
 
-	// Query All
 	var events []models.Event
 	err := db.C("events").Find(bson.M{}).All(&events)
 	if err != nil {
@@ -15,4 +17,27 @@ func GetAllEvents(db *mgo.Database, r render.Render)  {
 	}
 
 	r.JSON(200, events)
+}
+
+func GetEvent(db *mgo.Database, r render.Render, p martini.Params) {
+
+	var id bson.ObjectId
+	var event models.Event
+
+	if bson.IsObjectIdHex(p["id"]) {
+		id = bson.ObjectIdHex(p["id"])
+	} else {
+		// TODO Return an error object
+		r.JSON(404, "Invalid ObjectId")
+		return
+	}
+
+	err := db.C("events").Find(bson.M{"_id": id}).One(&event)
+
+	if err != nil {
+		panic(err)
+	}
+
+	r.JSON(200, event)
+
 }

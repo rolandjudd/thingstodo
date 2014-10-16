@@ -1,6 +1,7 @@
 package db
 
 import "github.com/go-martini/martini"
+
 import "gopkg.in/mgo.v2"
 
 // DB Returns a martini.Handler
