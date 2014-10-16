@@ -1,15 +1,12 @@
-package thingstodo
-
-import "string"
-import "fmt"
+package models
 
 type Event struct {
-	eventID     int
-	createdBy   int
-	eventLat    float32
-	eventLon    float32
-	title       string
-	description string
+	eventID     int			`json:"id"`
+	createdBy   int			`json:"createdBy"`
+	latitude    float32		`json:"latitude"`
+	longitude   float32		`json:"longitude"`
+	title       string		`json:"title"`
+	description string		`json:"description"`
 	//score int
 }
 
@@ -29,20 +26,20 @@ func (e *Event) SetCreatedBy(createdBy int) {
 	e.createdBy = createdBy
 }
 
-func (e Event) EventLat() float32 {
-	return e.eventLat
+func (e Event) Latitude() float32 {
+	return e.latitude
 }
 
-func (e *Event) SetEventLat(eventLat float32) {
-	e.eventLat = eventLat
+func (e *Event) SetLatitude(latitude float32) {
+	e.latitude = latitude
 }
 
-func (e Event) EventLon() float32 {
-	return e.eventLon
+func (e Event) Longitude() float32 {
+	return e.longitude
 }
 
-func (e *Event) SetEventLon(eventLon float32) {
-	e.eventLon = eventLon
+func (e *Event) SetLongitude(longitude float32) {
+	e.longitude = longitude
 }
 
 func (e Event) Title() string {
