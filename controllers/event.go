@@ -41,3 +41,9 @@ func GetEvent(db *mgo.Database, r render.Render, p martini.Params) {
 	r.JSON(200, event)
 
 }
+
+func AddEvent(db *mgo.Database, r render.Render, event models.Event) {
+
+	// TODO Insert into DB
+	r.JSON(200, event)
+}

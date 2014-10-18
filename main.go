@@ -2,9 +2,11 @@ package main
 
 import "github.com/go-martini/martini"
 import "github.com/codegangsta/martini-contrib/render"
+import "github.com/codegangsta/martini-contrib/binding"
 
 import "thingstodo/controllers"
 import "thingstodo/db"
+import "thingstodo/models"
 
 func main() {
 
@@ -17,9 +19,9 @@ func main() {
 	// Setup routes
 	m.Get(`/events`, controllers.GetAllEvents)
 	m.Get(`/events/:id`, controllers.GetEvent)
+	m.Post(`/events`, binding.Json(models.Event{}), binding.ErrorHandler, controllers.AddEvent)
 
-	// TODO Create, Update, Delete for events
-	//m.Post(`/events`, AddEvent)
+	// TODO Update, Delete for events
 	//m.Put(`/events/:id`, UpdateEvent)
 	//m.Delete(`/events/:id`, DeleteEvent)
 
