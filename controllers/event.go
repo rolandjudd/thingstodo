@@ -44,6 +44,16 @@ func GetEvent(db *mgo.Database, r render.Render, p martini.Params) {
 
 func AddEvent(db *mgo.Database, r render.Render, event models.Event) {
 
-	// TODO Insert into DB
+	// Create a unique id
+	event.Id = bson.NewObjectId()
+
+	// TODO Should be the user Id
+	event.CreatedBy = bson.NewObjectId()
+
+	err := db.C("events").Insert(event)
+	if err != nil {
+		panic(err)
+	}
+
 	r.JSON(200, event)
 }
