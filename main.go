@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/codegangsta/martini-contrib/binding"
+	"github.com/codegangsta/martini-contrib/cors"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/go-martini/martini"
 	"github.com/rolandjudd/thingstodo/controllers"
@@ -16,6 +17,13 @@ func main() {
 	// Setup middleware
 	m.Use(db.DB())
 	m.Use(render.Renderer())
+	m.Use(cors.Allow(&cors.Options{
+		AllowOrigins:     []string{"http://localhost*"},
+		AllowMethods:     []string{"POST", "GET"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 
 	// Setup routes
 	m.Get(`/events`, controllers.GetAllEvents)
