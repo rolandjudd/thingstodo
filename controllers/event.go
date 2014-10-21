@@ -6,6 +6,7 @@ import (
 	"github.com/rolandjudd/thingstodo/models"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"time"
 )
 
 func GetAllEvents(db *mgo.Database, r render.Render) {
@@ -27,12 +28,13 @@ func GetEvent(db *mgo.Database, r render.Render, p martini.Params) {
 	if bson.IsObjectIdHex(p["id"]) {
 		id = bson.ObjectIdHex(p["id"])
 	} else {
-		// TODO Return an error object
-		r.JSON(404, "Invalid ObjectId")
+		r.JSON(400, "Bad Request: Invalid ObjectId")
 		return
 	}
 
-	err := db.C("events").Find(bson.M{"_id": id}).One(&event)
+	err := db.C("events").FindId(id).One(&event)
+
+	// TODO Check for 404
 
 	if err != nil {
 		panic(err)
@@ -49,11 +51,12 @@ func AddEvent(db *mgo.Database, r render.Render, event models.Event) {
 
 	// TODO Should be the user Id
 	event.CreatedBy = bson.NewObjectId()
+	event.CreatedAt = time.Now().UTC()
 
 	err := db.C("events").Insert(event)
 	if err != nil {
 		panic(err)
 	}
 
-	r.JSON(200, event)
+	r.JSON(201, event)
 }
