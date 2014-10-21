@@ -1,10 +1,10 @@
 package models
 
-import "github.com/codegangsta/martini-contrib/binding"
-
-import "gopkg.in/mgo.v2/bson"
-
-import "net/http"
+import (
+	"github.com/codegangsta/martini-contrib/binding"
+	"gopkg.in/mgo.v2/bson"
+	"net/http"
+)
 
 type Event struct {
 	Id          bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
@@ -17,20 +17,20 @@ type Event struct {
 
 // This method implements binding.Validator and is executed by the binding.Validate middleware
 func (event Event) Validate(errors *binding.Errors, req *http.Request) {
-    
-    if len(event.Title) < 5 {
-        errors.Fields["title"] = "Too short; minimum 5 characters"
-    } else if len(event.Title) > 50 {
-        errors.Fields["title"] = "Too long; maximum 50 characters"
-    }
 
-    if len(event.Description) < 5 {
-        errors.Fields["description"] = "Too short; minimum 5 characters"
-    } else if len(event.Title) > 200 {
-        errors.Fields["description"] = "Too long; maximum 200 characters"
-    }
+	if len(event.Title) < 5 {
+		errors.Fields["title"] = "Too short; minimum 5 characters"
+	} else if len(event.Title) > 50 {
+		errors.Fields["title"] = "Too long; maximum 50 characters"
+	}
 
-    // TODO Validate Coordinates
+	if len(event.Description) < 5 {
+		errors.Fields["description"] = "Too short; minimum 5 characters"
+	} else if len(event.Title) > 200 {
+		errors.Fields["description"] = "Too long; maximum 200 characters"
+	}
 
-    // TODO binding:"required" should return the json name, not the field name
+	// TODO Validate Coordinates
+
+	// TODO binding:"required" should return the json name, not the field name
 }
