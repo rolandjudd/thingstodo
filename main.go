@@ -1,12 +1,13 @@
 package main
 
-import "github.com/go-martini/martini"
-import "github.com/codegangsta/martini-contrib/render"
-import "github.com/codegangsta/martini-contrib/binding"
-
-import "thingstodo/controllers"
-import "thingstodo/db"
-import "thingstodo/models"
+import (
+	"github.com/codegangsta/martini-contrib/binding"
+	"github.com/codegangsta/martini-contrib/render"
+	"github.com/go-martini/martini"
+	"github.com/rolandjudd/thingstodo/controllers"
+	"github.com/rolandjudd/thingstodo/db"
+	"github.com/rolandjudd/thingstodo/models"
+)
 
 func main() {
 

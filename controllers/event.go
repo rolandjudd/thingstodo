@@ -1,12 +1,12 @@
 package controllers
 
-import "github.com/go-martini/martini"
-import "github.com/codegangsta/martini-contrib/render"
-
-import "gopkg.in/mgo.v2"
-import "gopkg.in/mgo.v2/bson"
-
-import "thingstodo/models"
+import (
+	"github.com/codegangsta/martini-contrib/render"
+	"github.com/go-martini/martini"
+	"github.com/rolandjudd/thingstodo/models"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
+)
 
 func GetAllEvents(db *mgo.Database, r render.Render) {
 
