@@ -93,7 +93,7 @@ var EventBox = React.createClass({
                 url: this.props.url,
                 dataType: 'json',
                 type: 'POST',
-                data: event,
+                data: JSON.stringify(event),
                 success: function(data) {
                     this.setState({data: data});
                 }.bind(this),
@@ -122,4 +122,4 @@ var EventBox = React.createClass({
 });
 
 
-React.renderComponent(<EventBox url="http://localhost:3000/events" pollInterval={5000} />, mountNode);
+React.renderComponent(<EventBox url="http://localhost:3000/events" pollInterval={15000} />, mountNode);
