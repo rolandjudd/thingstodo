@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = window.React = require('react'),
+    Autocomplete = require('./autocomplete'),
     $ = require('jquery-browserify'),
     mountNode = document.getElementById("app");
 
@@ -36,13 +37,19 @@ var EventList = React.createClass({
 
 
 var EventForm = React.createClass({
+    handleAutocomplete: function(coordinates) {
+        this.setState({
+            coordinates: coordinates
+        });
+        console.log(coordinates);
+    },
     handleSubmit: function(e) {
         e.preventDefault()
         var title = this.refs.title.getDOMNode().value.trim();
         var description = this.refs.description.getDOMNode().value.trim();
-        var latitude = this.refs.latitude.getDOMNode().value;
-        var longitude = this.refs.longitude.getDOMNode().value;
-        var coordinates = [parseFloat(latitude), parseFloat(longitude)];
+        var date = this.refs.date.getDOMNode().value;
+        var compl = this.refs.compl.getDOMNode().value;
+        console.log(compl);
 
         if (!title || !description) {
             return;
@@ -61,8 +68,8 @@ var EventForm = React.createClass({
             <form className="eventForm" onSubmit={this.handleSubmit}>
                 <input type="text" placeholder="Event title" ref="title" />
                 <input type="text" placeholder="Event description" ref="description" />
-                <input type="number" placeholder="0.0" ref="latitude" />
-                <input type="number" placeholder="0.0" ref="longitude" />
+                <Autocomplete onUserInput={this.handleAutocomplete}/>
+                <input type="datetime-local" ref="date" />
                 <input type="submit" value="Post" />
             </form>
         )
@@ -122,4 +129,6 @@ var EventBox = React.createClass({
 });
 
 
-React.renderComponent(<EventBox url="http://localhost:3000/events" pollInterval={15000} />, mountNode);
+$(document).ready(function() {
+    React.renderComponent(<EventBox url="http://localhost:3000/events" pollInterval={15000} />, mountNode);
+});
