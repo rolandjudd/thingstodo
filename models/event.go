@@ -8,14 +8,14 @@ import (
 )
 
 type Event struct {
-	Id          bson.ObjectId `json:"id,omitempty"	bson:"_id,omitempty"`
-	Title       string        `json:"title"		bson:"title"`
-	Description string        `json:"description"	bson:"description"`
-	Coordinates []float64     `json:"coordinates"	bson:"coordinates"`
-	CreatedBy   bson.ObjectId `json:"created_by"	bson:"created_by"`
-	CreatedAt   time.Time     `json:"created_at"	bson:"created_at"`
-	StartTime   time.Time     `json:"start_time"	bson:"start_time"`
-	EndTime     time.Time     `json:"end_time"	bson:"end_time"`
+	Id          bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
+	Title       string        `json:"title" bson:"title"`
+	Description string        `json:"description" bson:"description"`
+	Coordinates []float64     `json:"coordinates" bson:"coordinates"`
+	CreatedBy   bson.ObjectId `json:"created_by" bson:"created_by"`
+	CreatedAt   time.Time     `json:"created_at" bson:"created_at"`
+	StartTime   time.Time     `json:"start_time" bson:"start_time"`
+	EndTime     time.Time     `json:"end_time" bson:"end_time"`
 }
 
 // This method implements binding.Validator and is executed by the binding.Validate middleware
