@@ -4,7 +4,6 @@ var gulp = require('gulp');
 var reactify = require('reactify');
 var del = require('del');
 var handleErrors = require('./util/handleErrors');
-var sass = require('gulp-sass');
 
 
 // Load plugins
@@ -13,7 +12,11 @@ var $ = require('gulp-load-plugins')();
 //Styles
 gulp.task('styles', function() {
     return gulp.src('app/styles/main.scss')
-        .pipe(sass())
+        .pipe($.rubySass({
+            style: 'expanded',
+            precision: 10,
+            loadPath: ['app/bower_components']
+        }))
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('dist/styles'))
         .pipe($.size());
