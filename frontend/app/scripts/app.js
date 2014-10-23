@@ -48,8 +48,6 @@ var EventForm = React.createClass({
         var title = this.refs.title.getDOMNode().value.trim();
         var description = this.refs.description.getDOMNode().value.trim();
         var date = this.refs.date.getDOMNode().value;
-        var compl = this.refs.compl.getDOMNode().value;
-        console.log(compl);
 
         if (!title || !description) {
             return;
@@ -57,10 +55,11 @@ var EventForm = React.createClass({
         this.props.onEventSubmit({
             title: title, 
             description: description,
-            coordinates: coordinates
+            coordinates: this.state.coordinates
         });
         this.refs.title.getDOMNode().value = "";
         this.refs.description.getDOMNode().value = "";
+        this.refs.autocomplete.getDOMNode().value = "";
         return;
     },
     render: function() {
@@ -68,7 +67,7 @@ var EventForm = React.createClass({
             <form className="eventForm" onSubmit={this.handleSubmit}>
                 <input type="text" placeholder="Event title" ref="title" />
                 <input type="text" placeholder="Event description" ref="description" />
-                <Autocomplete onUserInput={this.handleAutocomplete}/>
+                <Autocomplete onUserInput={this.handleAutocomplete} ref="autocomplete"/>
                 <input type="datetime-local" ref="date" />
                 <input type="submit" value="Post" />
             </form>

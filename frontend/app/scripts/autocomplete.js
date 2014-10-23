@@ -3,9 +3,8 @@
 var React = require('react');
 
 module.exports = React.createClass({
-    handleSubmit: function() {
+    handleChange: function() {
         var place = this.state.autocomplete.getPlace();
-        console.log(place);
         this.props.onUserInput(place.geometry.location.toString());
     },
     handleGeolocation: function() {
@@ -26,11 +25,12 @@ module.exports = React.createClass({
         this.setState({autocomplete: autocomplete}, function() {
                      console.log(this.state.autocomplete);
         });
+        google.maps.event.addListener(this.state.autocomplete, 'place_changed', this.handleChange);
     },
     render: function() {
         return (
            <input className="Autocomplete" ref="cmplt" placeholder="Enter the address"
-                onFocus={this.handleGeolocation} onChange={this.handleSubmit} type="text">
+                onFocus={this.handleGeolocation} type="text">
            </input>
         )
     }
