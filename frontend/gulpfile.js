@@ -4,11 +4,20 @@ var gulp = require('gulp');
 var reactify = require('reactify');
 var del = require('del');
 var handleErrors = require('./util/handleErrors');
+var sass = require('gulp-sass');
 
 
 // Load plugins
 var $ = require('gulp-load-plugins')();
 
+//Styles
+gulp.task('styles', function() {
+    return gulp.src('app/styles/main.scss')
+        .pipe(sass())
+        .pipe($.autoprefixer('last 1 version'))
+        .pipe(gulp.dest('dist/styles'))
+        .pipe($.size());
+});
 
 // Scripts
 gulp.task('scripts', function () {
@@ -51,7 +60,7 @@ gulp.task('clean', function (cb) {
 
 
 // Bundle
-gulp.task('bundle', ['scripts', 'bower'], function(){
+gulp.task('bundle', ['styles', 'scripts', 'bower'], function(){
     return gulp.src('./app/*.html')
                .pipe($.useref.assets())
                .pipe($.useref.restore())
@@ -95,6 +104,9 @@ gulp.task('watch', ['html', 'bundle', 'serve'], function () {
 
     // Watch .html files
     gulp.watch('app/*.html', ['html']);
+
+    // Watch .scss files
+    gulp.watch('app/styles/**/*.scss', ['styles']);
 
     // Watch .js files
     gulp.watch('app/scripts/**/*.js', ['scripts']);
