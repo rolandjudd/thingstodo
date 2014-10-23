@@ -69,7 +69,7 @@ var EventForm = React.createClass({
                 <input type="text" placeholder="Event description" ref="description" />
                 <Autocomplete onUserInput={this.handleAutocomplete} ref="autocomplete"/>
                 <input type="datetime-local" ref="date" />
-                <input type="submit" value="Post" />
+                <input type="submit" className="submit" value="Post" />
             </form>
         )
     }
@@ -119,7 +119,6 @@ var EventBox = React.createClass({
     render: function () {
         return (
             <div className="eventBox">
-                <h1>Events</h1>
                 <EventList data={this.state.data} />
                 <EventForm onEventSubmit={this.handleEventSubmit} />
             </div>
