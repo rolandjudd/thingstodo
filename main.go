@@ -10,12 +10,11 @@ import (
 	"github.com/rolandjudd/thingstodo/models"
 )
 
-func main() {
-
+func NewServer(databaseName string) *martini.ClassicMartini {
 	m := martini.Classic()
 
 	// Setup middleware
-	m.Use(db.DB())
+	m.Use(db.DB(databaseName))
 	m.Use(render.Renderer())
 	m.Use(cors.Allow(&cors.Options{
 		AllowOrigins:     []string{"http://localhost*"},
@@ -35,5 +34,11 @@ func main() {
 	//m.Delete(`/events/:id`, DeleteEvent)
 
 	// Add the router action
-	m.Run()
+    
+    return m
+}
+
+func main() {
+    server := NewServer("thingstodo")
+	server.Run()
 }
