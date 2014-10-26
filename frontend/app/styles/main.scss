@@ -14,12 +14,26 @@ body {
     padding-bottom: $padding-large-vertical;
 }
 
-div form .submit {
-    @extend .btn;
+.navbar {
+    z-index: 1;
+}
+
+.eventForm-enter {
+    opacity: 0.01;
+    transition: opacity 1s ease-in;
+}
+
+.eventForm-enter.eventForm-enter-active {
+    opacity: 1;
 }
 
 .eventForm input {
     @extend .form-control;
     margin-top: $padding-large-vertical;
     margin-bottom: $padding-base-vertical;
+}
+
+.Autocomplete {
+    z-index: 10000 !important;
+    position: relative;
 }

@@ -48,6 +48,7 @@ var EventForm = React.createClass({
         var title = this.refs.title.getDOMNode().value.trim();
         var description = this.refs.description.getDOMNode().value.trim();
         var date = this.refs.date.getDOMNode().value;
+        var date2 = this.refs.date2.getDOMNode().value;
 
         if (!title || !description) {
             return;
@@ -55,11 +56,15 @@ var EventForm = React.createClass({
         this.props.onEventSubmit({
             title: title, 
             description: description,
-            coordinates: this.state.coordinates
+            coordinates: this.state.coordinates,
+            start_time: date,
+            end_time: date2,
         });
         this.refs.title.getDOMNode().value = "";
         this.refs.description.getDOMNode().value = "";
         this.refs.autocomplete.getDOMNode().value = "";
+        this.refs.date.getDOMNode().value = "";
+        this.refs.date2.getDOMNode().value = "";
         return;
     },
     render: function() {
@@ -68,8 +73,17 @@ var EventForm = React.createClass({
                 <input type="text" placeholder="Event title" ref="title" />
                 <input type="text" placeholder="Event description" ref="description" />
                 <Autocomplete onUserInput={this.handleAutocomplete} ref="autocomplete"/>
-                <input type="datetime-local" ref="date" />
-                <input type="submit" className="submit" value="Post" />
+                <div className="row">
+                    <div className="col-sm-6">
+                        <label htmlFor="start">Start Time</label>
+                        <input type="datetime" id="start" ref="date" />
+                    </div>
+                    <div className="col-sm-6">
+                        <label htmlFor="start">End Time</label>
+                        <input type="datetime" ref="date2" />
+                    </div>
+                </div>
+                <input type="submit" className="btn" value="Post" />
             </form>
         )
     }
@@ -109,18 +123,45 @@ var EventBox = React.createClass({
             });
         });
     },
+    handleToggleEventForm: function() {
+        if (this.state.eventForm == true) {
+            this.setState({eventForm: false});
+        } else {
+            this.setState({eventForm: true});
+        }
+        console.log(this.state.eventForm);
+    },
     getInitialState: function () {
-        return {data: []};
+        return {data: [], eventForm: false};
     },
     componentDidMount: function () {
         this.loadEventsFromServer();
         setInterval(this.loadEventsFromServer, this.props.pollInterval);
     },
     render: function () {
+        var eventForm;
+        if (this.state.eventForm) {
+            eventForm = (<EventForm onEventSubmit={this.handleEventSubmit} />);
+        }
         return (
             <div className="eventBox">
-                <EventList data={this.state.data} />
-                <EventForm onEventSubmit={this.handleEventSubmit} />
+                <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
+                    <div className="container-fluid">
+                        <div className="navbar-header">
+                            <a className="navbar-brand" href="#">TTD</a>
+                        </div>
+                        <div className="nav navbar-nav">
+                            <button type="button" className="btn btn-default navbar-right"
+                                onClick={this.handleToggleEventForm}>
+                                Something show
+                            </button>
+                        </div>
+                        {eventForm}
+                    </div>
+                </nav>
+                <div className="container">
+                    <EventList data={this.state.data} />
+                </div>
             </div>
         );
     }
