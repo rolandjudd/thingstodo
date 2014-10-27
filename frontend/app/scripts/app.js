@@ -4,6 +4,7 @@ var React = window.React = require('react'),
     Autocomplete = require('./autocomplete'),
     $ = require('jquery-browserify'),
     DateRangePicker = require('react-bootstrap-daterangepicker'),
+    moment = require('moment'),
     mountNode = document.getElementById("app");
 
 var Event = React.createClass({
@@ -38,61 +39,62 @@ var EventList = React.createClass({
 
 
 var EventForm = React.createClass({
-    handleAutocomplete: function(coordinates) {
+    handleAutocomplete: function(lat, lng) {
         this.setState({
-            coordinates: coordinates
+            coordinates: [lat, lng]
         });
     },
     handleSubmit: function(e) {
         e.preventDefault()
         var title = this.refs.title.getDOMNode().value.trim();
         var description = this.refs.description.getDOMNode().value.trim();
-        var date = this.refs.date.getDOMNode().value;
-        var date2 = this.refs.date2.getDOMNode().value;
+        var coordinates = this.state.coordinates;
 
-        if (!title || !description) {
+        if (!title || !description || !coordinates) {
             return;
         }
         this.props.onEventSubmit({
             title: title, 
             description: description,
-            coordinates: this.state.coordinates,
-            start_time: date,
-            end_time: date2,
+            coordinates: coordinates,
+            start_time: this.state.startDate.toISOString(),
+            end_time: this.state.endDate.toISOString()
         });
+        console.log(this.props.onEventSubmit);
         this.refs.title.getDOMNode().value = "";
         this.refs.description.getDOMNode().value = "";
         this.refs.autocomplete.getDOMNode().value = "";
-        this.refs.date.getDOMNode().value = "";
-        this.refs.date2.getDOMNode().value = "";
         return;
     },
-    componentWillMount: function () {
-        console.log("Will mount");
+    handleDate: function (event, picker) {
+        this.setState({
+            startDate: picker.startDate,
+            endDate: picker.endDate
+        });
+        console.log(picker.startDate);
     },
-    componentDidMount: function () {
-        console.log("Mount");
+    getInitialState: function () {
+        return ({
+            startDate: moment(),
+            endDate: moment().add(1, 'days')
+        });
     },
     render: function() {
+        var start = this.state.startDate.format('MMMM Do YYYY, h:mm a');
+        var end = this.state.endDate.format('MMMM Do YYYY, h:mm a');
+        var label = start + ' to ' + end;
         return (
-            <form className="eventForm" onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="Event title" ref="title" />
-                <input type="text" placeholder="Event description" ref="description" />
-                <Autocomplete onUserInput={this.handleAutocomplete} ref="autocomplete"/>
-                <div className="row">
-                    <div className="col-sm-6">
-                        <label htmlFor="start">Start Time</label>
-                        <input type="datetime" id="start" ref="date" />
-                    </div>
-                    <div className="col-sm-6">
-                        <label htmlFor="start">End Time</label>
-                        <input type="datetime" ref="date2" />
-                    </div>
-                </div>
-                <DateRangePicker startDate="1/1/2014" endDate="1/1/2015">
-                    <div>Something</div>
+            <form className="eventForm container" onSubmit={this.handleSubmit}>
+                <input type="text" placeholder="Event title" ref="title" required />
+                <input type="text" placeholder="Event description" ref="description" required />
+                <Autocomplete onUserInput={this.handleAutocomplete} ref="autocomplete"required />
+                <DateRangePicker startDate={moment()} endDate={moment().add(1, 'days')} 
+                    timePicker={true} onApply={this.handleDate}>
+                    <button className="btn btn-default">
+                        <span className="glyphicon glyphicon-calendar"></span> {label}
+                    </button>
                 </DateRangePicker>
-                <input type="submit" className="btn" value="Post" />
+                <input type="submit" className="btn btn-primary" value="Post" />
             </form>
         );
     }
@@ -114,6 +116,7 @@ var EventBox = React.createClass({
         });
     },
     handleEventSubmit: function(event) {
+        var response;
         var events = this.state.data;
         events.push(event);
         console.log(JSON.stringify(event));
@@ -125,12 +128,16 @@ var EventBox = React.createClass({
                 data: JSON.stringify(event),
                 success: function(data) {
                     this.setState({data: data});
+                    response = data;
                 }.bind(this),
                 error: function (xhr, status, err) {
+                    console.error(xhr.responseText);
+                    response = xhr.responseText;
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
             });
         });
+        return response;
     },
     handleToggleEventForm: function() {
         if (this.state.eventForm == true) {
@@ -158,10 +165,10 @@ var EventBox = React.createClass({
                         <div className="navbar-header">
                             <a className="navbar-brand" href="#">TTD</a>
                         </div>
-                        <div className="nav navbar-nav">
-                            <button type="button" className="btn btn-default navbar-right"
+                        <div className="nav navbar-nav navbar-right">
+                            <button type="button" className="btn btn-primary navbar-btn"
                                 onClick={this.handleToggleEventForm}>
-                                Something show
+                                <span className="glyphicon glyphicon-plus"></span> Add Event
                             </button>
                         </div>
                     </div>

@@ -5,7 +5,7 @@ var React = require('react');
 module.exports = React.createClass({
     handleChange: function() {
         var place = this.state.autocomplete.getPlace();
-        this.props.onUserInput(place.geometry.location.toString());
+        this.props.onUserInput(place.geometry.location.lat(), place.geometry.location.lng());
     },
     handleGeolocation: function() {
         if (navigator.geolocation) {
