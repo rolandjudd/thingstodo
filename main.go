@@ -24,6 +24,8 @@ func NewServer(databaseName string) *martini.ClassicMartini {
 		AllowCredentials: true,
 	}))
 
+	m.Use(martini.Static("frontend/dist"))
+	
 	// Setup routes
 	m.Get(`/events`, controllers.GetAllEvents)
 	m.Get(`/events/:id`, controllers.GetEvent)
