@@ -60,7 +60,6 @@ var EventForm = React.createClass({
             start_time: this.state.startDate.toISOString(),
             end_time: this.state.endDate.toISOString()
         });
-        console.log(this.props.onEventSubmit);
         this.refs.title.getDOMNode().value = "";
         this.refs.description.getDOMNode().value = "";
         this.refs.autocomplete.getDOMNode().value = "";
@@ -76,7 +75,8 @@ var EventForm = React.createClass({
     getInitialState: function () {
         return ({
             startDate: moment(),
-            endDate: moment().add(1, 'days')
+            endDate: moment().add(1, 'days'),
+
         });
     },
     render: function() {
@@ -128,16 +128,13 @@ var EventBox = React.createClass({
                 data: JSON.stringify(event),
                 success: function(data) {
                     this.setState({data: data});
-                    response = data;
                 }.bind(this),
                 error: function (xhr, status, err) {
                     console.error(xhr.responseText);
-                    response = xhr.responseText;
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
             });
         });
-        return response;
     },
     handleToggleEventForm: function() {
         if (this.state.eventForm == true) {
