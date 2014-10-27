@@ -1,13 +1,9 @@
 {
-  "name": "frontend",
-  "version": "0.0.0",
+  "name": "test",
+  "version": "0.0.1",
   "dependencies": {
-    "bootstrap-sass-official": "~3.2.0",
-    "jquery": "~2.1.0",
-    "lodash": "~2.4.1",
-    "backbone": "~1.1.0",
-    "modernizr": "~2.7.1",
-    "bootstrap-material-design": "~0.1.0"
-  },
-  "devDependencies": {}
+    "jquery": "~2.1.1",
+    "bootstrap-sass-official": "^3.2.0",
+    "modernizr": "^2.8.3"
+  }
 }
