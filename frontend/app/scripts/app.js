@@ -90,9 +90,9 @@ var EventForm = React.createClass({
                 <Autocomplete onUserInput={this.handleAutocomplete} ref="autocomplete"required />
                 <DateRangePicker startDate={moment()} endDate={moment().add(1, 'days')} 
                     timePicker={true} onApply={this.handleDate}>
-                    <button className="btn btn-default">
+                    <div className="btn btn-default">
                         <span className="glyphicon glyphicon-calendar"></span> {label}
-                    </button>
+                    </div>
                 </DateRangePicker>
                 <input type="submit" className="btn btn-primary" value="Post" />
             </form>
