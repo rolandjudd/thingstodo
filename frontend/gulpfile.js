@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var reactify = require('reactify');
+var debowerify = require('debowerify');
 var del = require('del');
 var handleErrors = require('./util/handleErrors');
 
@@ -15,7 +16,7 @@ gulp.task('styles', function() {
         .pipe($.rubySass({
             style: 'expanded',
             precision: 10,
-            loadPath: ['app/bower_components']
+            loadPath: ['app/bower_components', 'app/styles']
         }))
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('dist/styles'))

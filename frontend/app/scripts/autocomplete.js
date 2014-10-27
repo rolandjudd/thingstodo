@@ -32,6 +32,6 @@ module.exports = React.createClass({
            <input className="Autocomplete" ref="cmplt" placeholder="Enter the address"
                 onFocus={this.handleGeolocation} type="text">
            </input>
-        )
+        );
     }
 });

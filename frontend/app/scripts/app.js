@@ -3,6 +3,7 @@
 var React = window.React = require('react'),
     Autocomplete = require('./autocomplete'),
     $ = require('jquery-browserify'),
+    DateRangePicker = require('react-bootstrap-daterangepicker'),
     mountNode = document.getElementById("app");
 
 var Event = React.createClass({
@@ -14,7 +15,7 @@ var Event = React.createClass({
                 </h2>
                 {this.props.children}
             </div>
-        )
+        );
     }
 });
 
@@ -41,7 +42,6 @@ var EventForm = React.createClass({
         this.setState({
             coordinates: coordinates
         });
-        console.log(coordinates);
     },
     handleSubmit: function(e) {
         e.preventDefault()
@@ -67,6 +67,12 @@ var EventForm = React.createClass({
         this.refs.date2.getDOMNode().value = "";
         return;
     },
+    componentWillMount: function () {
+        console.log("Will mount");
+    },
+    componentDidMount: function () {
+        console.log("Mount");
+    },
     render: function() {
         return (
             <form className="eventForm" onSubmit={this.handleSubmit}>
@@ -83,9 +89,12 @@ var EventForm = React.createClass({
                         <input type="datetime" ref="date2" />
                     </div>
                 </div>
+                <DateRangePicker startDate="1/1/2014" endDate="1/1/2015">
+                    <div>Something</div>
+                </DateRangePicker>
                 <input type="submit" className="btn" value="Post" />
             </form>
-        )
+        );
     }
 });
 
@@ -129,7 +138,6 @@ var EventBox = React.createClass({
         } else {
             this.setState({eventForm: true});
         }
-        console.log(this.state.eventForm);
     },
     getInitialState: function () {
         return {data: [], eventForm: false};
@@ -139,9 +147,9 @@ var EventBox = React.createClass({
         setInterval(this.loadEventsFromServer, this.props.pollInterval);
     },
     render: function () {
-        var eventForm;
+        var eventForm = null;
         if (this.state.eventForm) {
-            eventForm = (<EventForm onEventSubmit={this.handleEventSubmit} />);
+            eventForm = "aa";
         }
         return (
             <div className="eventBox">
@@ -156,9 +164,9 @@ var EventBox = React.createClass({
                                 Something show
                             </button>
                         </div>
-                        {eventForm}
                     </div>
                 </nav>
+                {this.state.eventForm ? <EventForm onEventSubmit={this.handleEventSubmit} /> : null}
                 <div className="container">
                     <EventList data={this.state.data} />
                 </div>
