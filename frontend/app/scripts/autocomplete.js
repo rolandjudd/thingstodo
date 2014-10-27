@@ -23,15 +23,13 @@ module.exports = React.createClass({
         var autocomplete = new google.maps.places.Autocomplete(
             this.refs.cmplt.getDOMNode(), {types: ['geocode']});
         this.setState({autocomplete: autocomplete}, function() {
-                     console.log(this.state.autocomplete);
+            google.maps.event.addListener(this.state.autocomplete, 'place_changed', this.handleChange);
         });
-        google.maps.event.addListener(this.state.autocomplete, 'place_changed', this.handleChange);
     },
     render: function() {
         return (
            <input className="Autocomplete" ref="cmplt" placeholder="Enter the address"
-                onFocus={this.handleGeolocation} type="text">
-           </input>
+               onFocus={this.handleGeolocation} type="text" />
         );
     }
 });

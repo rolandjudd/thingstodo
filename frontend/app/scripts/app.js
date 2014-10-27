@@ -165,8 +165,8 @@ var EventBox = React.createClass({
                             </button>
                         </div>
                     </div>
+                    {this.state.eventForm ? <EventForm onEventSubmit={this.handleEventSubmit} /> : null}
                 </nav>
-                {this.state.eventForm ? <EventForm onEventSubmit={this.handleEventSubmit} /> : null}
                 <div className="container">
                     <EventList data={this.state.data} />
                 </div>
