@@ -34,6 +34,6 @@ func NewServer(databaseName string) *martini.ClassicMartini {
 	//m.Delete(`/events/:id`, DeleteEvent)
 
 	// Add the router action
-    
-    return m
+
+	return m
 }

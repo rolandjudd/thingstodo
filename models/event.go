@@ -4,15 +4,15 @@ import (
 	"github.com/codegangsta/martini-contrib/binding"
 	"gopkg.in/mgo.v2/bson"
 	"net/http"
+	"sort"
 	"time"
-    "sort"
 )
 
 type Event struct {
 	Id          bson.ObjectId `json:"id,omitempty" bson:"_id,omitempty"`
 	Title       string        `json:"title" bson:"title"`
 	Description string        `json:"description" bson:"description"`
-    Category    string        `json:"category" bson:"category"`
+	Category    string        `json:"category" bson:"category"`
 	Coordinates []float64     `json:"coordinates" bson:"coordinates"`
 	CreatedBy   bson.ObjectId `json:"created_by" bson:"created_by"`
 	CreatedAt   time.Time     `json:"created_at" bson:"created_at"`
@@ -39,14 +39,14 @@ func (event Event) Validate(errors *binding.Errors, req *http.Request) {
 	} else if len(event.Title) > 200 {
 		errors.Fields["description"] = "Too long, maximum 200 characters"
 	}
-    
-    var categoryList = []string { "Pubcrawl", "Sale", "Party", "Other" }
-    sort.Strings(categoryList)
-    if event.Category == "" {
-        errors.Fields["category"] = "This field is required"
-    } else if categoryList[sort.SearchStrings(categoryList, event.Category)] != event.Category {
-        errors.Fields["category"] = "Invalid category"
-    }
+
+	var categoryList = []string{"Pubcrawl", "Sale", "Party", "Other"}
+	sort.Strings(categoryList)
+	if event.Category == "" {
+		errors.Fields["category"] = "This field is required"
+	} else if categoryList[sort.SearchStrings(categoryList, event.Category)] != event.Category {
+		errors.Fields["category"] = "Invalid category"
+	}
 
 	// TODO Validate Coordinates
 
