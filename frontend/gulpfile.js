@@ -80,7 +80,7 @@ gulp.task('bundle', ['styles', 'fonts', 'scripts', 'bower'], function(){
 });
 
 // Build
-gulp.task('build', ['html', 'bundle', 'images']);
+gulp.task('build', ['html', 'bundle']);
 
 // Default task
 gulp.task('default', ['clean', 'build']);
