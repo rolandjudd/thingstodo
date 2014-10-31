@@ -10,14 +10,26 @@ var handleErrors = require('./util/handleErrors');
 // Load plugins
 var $ = require('gulp-load-plugins')();
 
-//Styles
-gulp.task('styles', function() {
+
+// Styles
+gulp.task('styles', ['sass', 'css']);
+
+// Sass
+gulp.task('sass', function() {
     return gulp.src('app/styles/main.scss')
         .pipe($.rubySass({
             style: 'expanded',
             precision: 10,
             loadPath: ['app/bower_components', 'app/styles']
         }))
+        .pipe($.autoprefixer('last 1 version'))
+        .pipe(gulp.dest('dist/styles'))
+        .pipe($.size());
+});
+
+// CSS
+gulp.task('css', function() {
+    return gulp.src('app/styles/*.css')
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('dist/styles'))
         .pipe($.size());
