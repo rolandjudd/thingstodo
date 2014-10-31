@@ -117,10 +117,10 @@ gulp.task('watch', ['html', 'bundle', 'serve'], function () {
     gulp.watch('app/*.html', ['html']);
 
     // Watch .scss files
-    gulp.watch('app/styles/**/*.scss', ['styles']);
+    gulp.watch('app/styles/*.scss', ['styles']);
+    gulp.watch('app/styles/*.css', ['styles']);
 
     // Watch .js files
-    gulp.watch('app/scripts/**/*.js', ['scripts']);
     gulp.watch('app/scripts/*.js', ['scripts']);
 
     // Watch image files
