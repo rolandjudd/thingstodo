@@ -36,7 +36,7 @@ func (event Event) Validate(errors *binding.Errors, req *http.Request) {
 		errors.Fields["description"] = "This field is required"
 	} else if len(event.Description) < 5 {
 		errors.Fields["description"] = "Too short, minimum 5 characters"
-	} else if len(event.Title) > 200 {
+	} else if len(event.Description) > 200 {
 		errors.Fields["description"] = "Too long, maximum 200 characters"
 	}
 
