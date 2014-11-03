@@ -49,6 +49,7 @@ var EventForm = React.createClass({
         var title = this.refs.title.getDOMNode().value.trim();
         var description = this.refs.description.getDOMNode().value.trim();
         var coordinates = this.state.coordinates;
+        var category = this.refs.category.getDOMNode().value;
 
         if (!title || !description || !coordinates) {
             return;
@@ -58,7 +59,8 @@ var EventForm = React.createClass({
             description: description,
             coordinates: coordinates,
             start_time: this.state.startDate.toISOString(),
-            end_time: this.state.endDate.toISOString()
+            end_time: this.state.endDate.toISOString(),
+            category: category
         });
         this.refs.title.getDOMNode().value = "";
         this.refs.description.getDOMNode().value = "";
@@ -83,17 +85,31 @@ var EventForm = React.createClass({
         var start = this.state.startDate.format('MMMM Do YYYY, h:mm a');
         var end = this.state.endDate.format('MMMM Do YYYY, h:mm a');
         var label = start + ' to ' + end;
+        var categories = ['Pubcrawl', 'Sale', 'Party', 'Other'];
+        var categoryInputs = categories.map(function (name, index) {
+            return (<option value={name} key={index}>{name}</option>);
+        });
+
         return (
             <form className="eventForm container" onSubmit={this.handleSubmit}>
                 <input type="text" placeholder="Event title" ref="title" required />
                 <input type="text" placeholder="Event description" ref="description" required />
                 <Autocomplete onUserInput={this.handleAutocomplete} ref="autocomplete"required />
-                <DateRangePicker startDate={moment()} endDate={moment().add(1, 'days')} 
-                    timePicker={true} onApply={this.handleDate}>
-                    <div className="btn btn-default">
-                        <span className="glyphicon glyphicon-calendar"></span> {label}
+                <div className="row">
+                    <div className="col-md-8">
+                        <DateRangePicker startDate={moment()} endDate={moment().add(1, 'days')} 
+                            timePicker={true} onApply={this.handleDate}>
+                            <div className="btn btn-default">
+                                <span className="glyphicon glyphicon-calendar"></span> {label}
+                            </div>
+                        </DateRangePicker>
                     </div>
-                </DateRangePicker>
+                    <div className="col-md-4">
+                        <select className="form-control" ref="category">
+                            {categoryInputs}
+                        </select>
+                    </div>
+                </div>
                 <input type="submit" className="btn btn-primary" value="Post" />
             </form>
         );
