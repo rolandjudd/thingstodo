@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/go-martini/martini"
 	"github.com/rolandjudd/thingstodo/models"
@@ -45,7 +44,7 @@ func AddComment(db *mgo.Database, r render.Render, comment models.Comment, p mar
 	}
 
 	comment.EventId = eventId
-	fmt.Println(p["event_id"])
+
 	// TODO Should be the user Id
 	comment.CreatedBy = bson.NewObjectId()
 	comment.CreatedAt = time.Now().UTC()
