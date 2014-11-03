@@ -1,10 +1,16 @@
 {
-  "name": "test",
-  "version": "0.0.0",
+  "name": "ThingsToDo",
+  "version": "0.6.0",
+  "description": "A new way to find nearby events",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/rolandjudd/thingstodo"
+  },
   "dependencies": {
     "moment": "^2.8.3",
-    "react-bootstrap-daterangepicker": "0.0.6",
-    "react-widgets": "^1.4.1"
+    "react": "^0.11.2",
+    "react-bootstrap": "^0.12.0",
+    "react-bootstrap-daterangepicker": "0.0.6"
   },
   "devDependencies": {
     "debowerify": "^0.9.1",
@@ -24,7 +30,6 @@
     "gulp-util": "~3.0.1",
     "gulp-webserver": "^0.8.3",
     "jquery-browserify": "^1.8.1",
-    "react": "^0.11.2",
     "reactify": "~0.14.0"
   },
   "engines": {
