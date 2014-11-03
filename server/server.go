@@ -27,10 +27,15 @@ func NewServer(databaseName string) *martini.ClassicMartini {
 	// Static Assets
 	m.Use(martini.Static("frontend/dist"))
 
-	// Setup routes
+	// Setup event routes
 	m.Get(`/events`, controllers.GetAllEvents)
 	m.Get(`/events/:id`, controllers.GetEvent)
 	m.Post(`/events`, binding.Json(models.Event{}), binding.ErrorHandler, controllers.AddEvent)
+    
+    // Setup comment routes
+    m.Get(`/events/:event_id/comments`, controllers.GetAllComments)
+    m.Post(`/events/:event_id/comments`, binding.Json(models.Comment{}), binding.ErrorHandler, controllers.AddComment)
+    
 
 	// TODO Update, Delete for events
 	//m.Put(`/events/:id`, UpdateEvent)
