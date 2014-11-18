@@ -31,7 +31,7 @@ func NewServer(databaseName string) *martini.ClassicMartini {
 	}))
 
 	// Google OAuth
-	m.Use(sessions.Sessions("my_session", sessions.NewCookieStore([]byte(c.Cookie_Auth), 
+	m.Use(sessions.Sessions("my_session", sessions.NewCookieStore([]byte(c.Cookie_Auth),
 		[]byte(c.Cookie_Enc))))
 
 	m.Use(oauth2.Google(

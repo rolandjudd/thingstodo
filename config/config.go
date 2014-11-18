@@ -6,11 +6,11 @@ import (
 )
 
 type Config struct {
-	Client_Id     string
-	Client_Secret string
+	Client_Id      string
+	Client_Secret  string
 	OAuth_Callback string
-	Cookie_Auth   string
-	Cookie_Enc    string
+	Cookie_Auth    string
+	Cookie_Enc     string
 }
 
 func GetConfig() *Config {
