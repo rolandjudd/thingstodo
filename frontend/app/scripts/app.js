@@ -36,98 +36,22 @@ var EventList = React.createClass({
 });
 
 
-var EventForm = React.createClass({
-    handleAutocomplete: function(lat, lng) {
-        this.setState({
-            coordinates: [lat, lng]
-        });
-    },
-    handleSubmit: function(e) {
-        e.preventDefault()
-        var title = this.refs.title.getDOMNode().value.trim();
-        var description = this.refs.description.getDOMNode().value.trim();
-        var coordinates = this.state.coordinates;
-        var category = this.refs.category.getDOMNode().value;
-
-        if (!title || !description || !coordinates) {
-            return;
-        }
-        this.props.onEventSubmit({
-            title: title, 
-            description: description,
-            coordinates: coordinates,
-            start_time: this.state.startDate.toISOString(),
-            end_time: this.state.endDate.toISOString(),
-            category: category
-        });
-        this.refs.title.getDOMNode().value = "";
-        this.refs.description.getDOMNode().value = "";
-        this.refs.autocomplete.getDOMNode().value = "";
-        return;
-    },
-    handleDate: function (event, picker) {
-        this.setState({
-            startDate: picker.startDate,
-            endDate: picker.endDate
-        });
-        console.log(picker.startDate);
-    },
-    getInitialState: function () {
-        return ({
-            startDate: moment(),
-            endDate: moment().add(1, 'days'),
-
-        });
-    },
-    render: function() {
-        var start = this.state.startDate.format('MMMM Do YYYY, h:mm a');
-        var end = this.state.endDate.format('MMMM Do YYYY, h:mm a');
-        var label = start + ' to ' + end;
-        var categories = ['Pubcrawl', 'Sale', 'Party', 'Other'];
-        var categoryInputs = categories.map(function (name, index) {
-            return (<option value={name} key={index}>{name}</option>);
-        });
-
-        return (
-            <form className="eventForm container" onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="Event title" ref="title" required />
-                <input type="text" placeholder="Event description" ref="description" required />
-                <Autocomplete onUserInput={this.handleAutocomplete} ref="autocomplete"required />
-                <div className="row">
-                    <div className="col-md-8">
-                        <DateRangePicker startDate={moment()} endDate={moment().add(1, 'days')} 
-                            timePicker={true} onApply={this.handleDate}>
-                            <div className="btn btn-default">
-                                <span className="glyphicon glyphicon-calendar"></span> {label}
-                            </div>
-                        </DateRangePicker>
-                    </div>
-                    <div className="col-md-4">
-                        <select className="form-control" ref="category">
-                            {categoryInputs}
-                        </select>
-                    </div>
-                </div>
-                <input type="submit" className="btn btn-primary" value="Post" />
-            </form>
-        );
-    }
-});
 
 
 var EventBox = React.createClass({
     loadEventsFromServer: function () {
+        eventBox = this;
         $.ajax({
             url: this.props.url,
             dataType: 'json',
             type: 'GET',
-            success: function (data) {
-                this.setState({data: data});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        })
+          .done(function (data) {
+              eventBox.setState({data: data});
+          })
+          .fail(function (xhr, status, err) {
+              console.error(eventBox.props.url, status, err.toString());
+          });
     },
     handleEventSubmit: function(event) {
         var response;
@@ -135,19 +59,21 @@ var EventBox = React.createClass({
         events.push(event);
         console.log(JSON.stringify(event));
         this.setState({data: events}, function() {
+            eventBox = this;
             $.ajax({
                 url: this.props.url,
                 dataType: 'json',
                 type: 'POST',
                 data: JSON.stringify(event),
-                success: function(data) {
-                    this.setState({data: data});
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    console.error(xhr.responseText);
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            });
+            })
+              .done(function (data) {
+                  eventBox.setState({data: data});
+              })
+              .fail(function (xhr, status, err) {
+                  console.error(xhr.responseText);
+                  alert(xhr.responseText);
+                  console.error(eventBox.props.url, status, err.toString());
+              });
         });
     },
     handleToggleEventForm: function() {
