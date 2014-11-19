@@ -16,6 +16,8 @@ func TestControllers(t *testing.T) {
 	RunSpecs(t, "Controllers Suite")
 }
 
+// Defines factories for testing
+// Allows for simple object creation during testing
 func defineFactories() {
 	validID := bson.NewObjectId()
 

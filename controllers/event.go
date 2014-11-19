@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+// Called on a GET to /events
+// Returns a list of all events
 func GetAllEvents(db *mgo.Database, r render.Render) {
 
 	var events []models.Event
@@ -20,6 +22,8 @@ func GetAllEvents(db *mgo.Database, r render.Render) {
 	r.JSON(200, events)
 }
 
+// Called on a Get to /events/:id
+// Returns a single event with the id :id
 func GetEvent(db *mgo.Database, r render.Render, p martini.Params) {
 
 	var id bson.ObjectId
@@ -44,6 +48,8 @@ func GetEvent(db *mgo.Database, r render.Render, p martini.Params) {
 
 }
 
+// Called on a POST to /events
+// Assuming valid event; adds the given event
 func AddEvent(db *mgo.Database, r render.Render, event models.Event) {
 
 	// Create a unique id

@@ -13,6 +13,7 @@ type Config struct {
 	Cookie_Enc     string
 }
 
+// This configures the keys and callbacks for OAuth.
 func GetConfig() *Config {
 
 	// Load .env file

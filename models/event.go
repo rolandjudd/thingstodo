@@ -40,6 +40,8 @@ func (event Event) Validate(errors *binding.Errors, req *http.Request) {
 		errors.Fields["description"] = "Too long, maximum 200 characters"
 	}
 
+	//Check to see if given category is an accepted one
+	//Idiot proof method used, but sorts the categoryList each time for slightly worse performance.
 	var categoryList = []string{"Pubcrawl", "Sale", "Party", "Other"}
 	sort.Strings(categoryList)
 	if event.Category == "" {
