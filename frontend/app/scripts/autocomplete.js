@@ -28,7 +28,7 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-           <input className="Autocomplete" ref="cmplt" placeholder="Enter the address"
+           <input className="autocomplete form-control" ref="cmplt" placeholder="Enter the address"
                onFocus={this.handleGeolocation} type="text" />
         );
     }

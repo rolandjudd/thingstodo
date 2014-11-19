@@ -19,7 +19,11 @@ body {
 }
 
 .eventForm input {
-    @extend .form-control;
+    margin-top: $padding-large-vertical;
+    margin-bottom: $padding-base-vertical;
+}
+
+.eventForm .btn {
     margin-top: $padding-large-vertical;
     margin-bottom: $padding-base-vertical;
 }
