@@ -1,11 +1,9 @@
 /** @jsx React.DOM */
 
 var React = window.React = require('react'),
-    Autocomplete = require('./autocomplete'),
     $ = require('jquery-browserify'),
-    DateRangePicker = require('react-bootstrap-daterangepicker'),
-    moment = require('moment'),
-    mountNode = document.getElementById("app");
+    ReactBootstrap = require('react-bootstrap'),
+    mountNode = document.getElementById('app');
 
 var Event = React.createClass({
     render: function () {
@@ -167,10 +165,7 @@ var EventBox = React.createClass({
         setInterval(this.loadEventsFromServer, this.props.pollInterval);
     },
     render: function () {
-        var eventForm = null;
-        if (this.state.eventForm) {
-            eventForm = "aa";
-        }
+        EventForm = require('./EventForm');
         return (
             <div className="eventBox">
                 <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
