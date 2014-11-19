@@ -16,7 +16,11 @@ func TestControllers(t *testing.T) {
 	RunSpecs(t, "Controllers Suite")
 }
 
+// Defines factories for testing
+// Allows for simple object creation during testing
 func defineFactories() {
+	validID := bson.NewObjectId()
+
 	gory.Define("event", models.Event{},
 		func(factory gory.Factory) {
 			factory["Title"] = "Yard Sale!"
@@ -46,4 +50,22 @@ func defineFactories() {
 			factory["StartTime"] = time.Date(2999, time.January, 1, 12, 12, 12, 12, time.UTC)
 			factory["EndTime"] = time.Date(2999, time.January, 2, 12, 12, 12, 12, time.UTC)
 		})
+
+	gory.Define("eventCommentTest", models.Event{},
+		func(factory gory.Factory) {
+			factory["Title"] = "Yard Sale!"
+			factory["Description"] = "Getting a bunch of old stuff out of the attic!"
+			factory["Category"] = "Sale"
+			factory["Id"] = validID
+			factory["CreatedBy"] = bson.NewObjectId()
+			factory["StartTime"] = time.Date(2999, time.January, 1, 12, 12, 12, 12, time.UTC)
+			factory["EndTime"] = time.Date(2999, time.January, 2, 12, 12, 12, 12, time.UTC)
+		})
+
+	gory.Define("comment", models.Comment{},
+		func(factory gory.Factory) {
+			factory["Comment"] = "This is a valid comment."
+			factory["EventId"] = validID
+		})
+
 }

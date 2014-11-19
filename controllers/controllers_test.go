@@ -160,4 +160,52 @@ var _ = Describe("Server", func() {
 			})
 		})
 	})
+
+	Describe("GET /events/:id/comments", func() {
+
+		// Insert an event for us to get the comments of before each
+		BeforeEach(func() {
+			testEvent := *gory.Build("eventCommentTest").(*models.Event)
+			collection := session.DB(dbName).C("events")
+			collection.Insert(testEvent)
+			request, _ = http.NewRequest("GET", "/events/"+testEvent.Id.Hex()+"/comments", nil)
+		})
+
+		Context("when no comments exist", func() {
+			It("returns a status code of 200", func() {
+				testServer.ServeHTTP(recorder, request)
+				Expect(recorder.Code).To(Equal(200))
+			})
+
+			It("returns a empty body", func() {
+				testServer.ServeHTTP(recorder, request)
+				Expect(recorder.Body.String()).To(Equal("null"))
+			})
+		})
+
+		Context("when comments exist", func() {
+
+			// Insert two valid signatures into the database
+			// before each test in this context.
+			BeforeEach(func() {
+				collection := session.DB(dbName).C("comments")
+				collection.Insert(*gory.Build("comment").(*models.Comment))
+			})
+
+			It("returns a status code of 200", func() {
+				testServer.ServeHTTP(recorder, request)
+				Expect(recorder.Code).To(Equal(200))
+			})
+
+			It("returns those comments in the body", func() {
+				testServer.ServeHTTP(recorder, request)
+
+				commentsJSON := sliceFromJSON(recorder.Body.Bytes())
+				Expect(len(commentsJSON)).To(Equal(1))
+
+				commentJSON := commentsJSON[0].(map[string]interface{})
+				Expect(commentJSON["comment"]).To(Equal("This is a valid comment."))
+			})
+		})
+	})
 })

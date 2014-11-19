@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
+	//Create a new server object and run it
 	server := server.NewServer("thingstodo")
 	server.Run()
 }

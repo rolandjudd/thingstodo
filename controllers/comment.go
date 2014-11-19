@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/go-martini/martini"
 	"github.com/rolandjudd/thingstodo/models"
@@ -10,6 +9,8 @@ import (
 	"time"
 )
 
+// Called on a GET to /events/:id/comments
+// Returns list of all comments under :id
 func GetAllComments(db *mgo.Database, r render.Render, p martini.Params) {
 	var eventId bson.ObjectId
 	var comments []models.Comment
@@ -31,6 +32,8 @@ func GetAllComments(db *mgo.Database, r render.Render, p martini.Params) {
 
 }
 
+// Called on a POST to /events/:id/comments
+// Assuming valid comment; Adds the comment under the given id
 func AddComment(db *mgo.Database, r render.Render, comment models.Comment, p martini.Params) {
 	var eventId bson.ObjectId
 
@@ -45,7 +48,7 @@ func AddComment(db *mgo.Database, r render.Render, comment models.Comment, p mar
 	}
 
 	comment.EventId = eventId
-	fmt.Println(p["event_id"])
+
 	// TODO Should be the user Id
 	comment.CreatedBy = bson.NewObjectId()
 	comment.CreatedAt = time.Now().UTC()
