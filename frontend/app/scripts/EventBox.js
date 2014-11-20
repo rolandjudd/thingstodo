@@ -5,7 +5,7 @@ var React = window.React = require('react'),
 
 var EventBox = React.createClass({
     loadEventsFromServer: function () {
-        eventBox = this;
+        var eventBox = this;
         // ajax request for loading events
         gUrl = window.location.origin + "/events";
         $.ajax({
@@ -24,18 +24,18 @@ var EventBox = React.createClass({
     },
     // handle the sumbission of an event
     handleEventSubmit: function(event) {
-        var response;
+        var eventBox = this;
+        var url = window.location.origin + "/events";
         var events = this.state.data;
         events.push(event);
         console.log(JSON.stringify(event));
-        gUrl = window.location.origin + "/events";
+
         this.setState({data: events}, function() {
-            eventBox = this;
             $.ajax({
-                url: gUrl,
+                url: url,
                 dataType: 'json',
                 type: 'POST',
-                data: JSON.stringify(event),
+                data: JSON.stringify(event)
             })
             .done(function (data) {
                 eventBox.setState({data: data});
@@ -66,23 +66,23 @@ var EventBox = React.createClass({
         EventForm = require('./EventForm');
         return (
             <div className="eventBox">
-            <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div className="container-fluid">
-            <div className="navbar-header">
-            <a className="navbar-brand" href="#">TTD</a>
-            </div>
-            <div className="nav navbar-nav navbar-right">
-            <button type="button" className="btn btn-primary navbar-btn"
-            onClick={this.handleToggleEventForm}>
-            <span className="glyphicon glyphicon-plus"></span> Add Event
-            </button>
-            </div>
-            </div>
-            {this.state.eventForm ? <EventForm onEventSubmit={this.handleEventSubmit} /> : null}
-            </nav>
-            <div className="container">
-            <EventList data={this.state.data} />
-            </div>
+                <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
+                    <div className="container-fluid">
+                    <div className="navbar-header">
+                        <a className="navbar-brand" href="#">TTD</a>
+                    </div>
+                    <div className="nav navbar-nav navbar-right">
+                        <button type="button" className="btn btn-primary navbar-btn"
+                        onClick={this.handleToggleEventForm}>
+                            <span className="glyphicon glyphicon-plus"></span> Add Event
+                        </button>
+                    </div>
+                    </div>
+                    {this.state.eventForm ? <EventForm onEventSubmit={this.handleEventSubmit} /> : null}
+                </nav>
+                <div className="container">
+                    <EventList data={this.state.data} />
+                </div>
             </div>
         );
     }

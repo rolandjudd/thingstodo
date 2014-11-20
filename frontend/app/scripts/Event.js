@@ -19,7 +19,7 @@ var Event = React.createClass({
             <div className="event">
             {title}
             {this.props.children}
-            <CommentBox url={url} />
+            <CommentBox eventId={this.props.id} url={url} />
             <hr />
             </div>
         );
