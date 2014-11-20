@@ -15,7 +15,9 @@ var CommentBox = React.createClass({
         })
           .done(function (data) {
               // handle success
-              commentBox.setState({data: data});
+              if (data) {
+                  commentBox.setState({data: data});
+              }      
           })
           .fail(function (xhr, status, err) {
               // handle failure
@@ -57,7 +59,7 @@ var CommentBox = React.createClass({
         this.loadCommentsFromServer();
         //setInterval(this.loadEventsFromServer, this.props.pollInterval);
     },
-    
+
     render: function () {
         // create CommentList with data
         return (
