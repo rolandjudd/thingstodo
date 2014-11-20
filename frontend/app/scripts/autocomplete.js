@@ -7,6 +7,7 @@ module.exports = React.createClass({
         var place = this.state.autocomplete.getPlace();
         this.props.onUserInput(place.geometry.location.lat(), place.geometry.location.lng());
     },
+    // grab location from google maps
     handleGeolocation: function() {
         if (navigator.geolocation) {
             var autocomplete = this.state.autocomplete;

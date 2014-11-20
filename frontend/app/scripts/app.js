@@ -36,8 +36,8 @@ var EventList = React.createClass({
     render: function () {
         // this.props = data passed from EventBox
         var eventNodes = this.props.data.map(function(event, index) {
+            // propigate data to an <Event></Event>
             return (
-                // propigate data to an <Event></Event>
                 <Event
                     key={index}
                     id={event.id}
@@ -149,7 +149,5 @@ var EventBox = React.createClass({
 // Document ready react load
 $(document).ready(function() {
     var events_url = window.location.origin + "/events";
-    events_url = "http://localhost:3000/events";
-    // Begin recursive react render
     React.renderComponent(<EventBox url={events_url} pollInterval={15000} />, mountNode);
 });

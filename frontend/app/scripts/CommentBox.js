@@ -30,10 +30,10 @@ var CommentBox = React.createClass({
         //setInterval(this.loadEventsFromServer, this.props.pollInterval);
     },
     render: function () {
+        // create CommentList with data
         return (
             <div className="commentBox">
                 <h3>Comments</h3>
-                // create CommentList with data
                 <CommentList data={this.state.data} />
             </div>
         );
