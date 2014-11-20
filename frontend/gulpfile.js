@@ -66,11 +66,6 @@ gulp.task('fonts', function () {
 // Images
 gulp.task('images', function () {
     return gulp.src('app/images/**/*')
-        .pipe($.cache($.imagemin({
-            optimizationLevel: 3,
-            progressive: true,
-            interlaced: true
-        })))
         .pipe(gulp.dest('dist/images'))
         .pipe($.size());
 });
@@ -95,7 +90,7 @@ gulp.task('bundle', ['styles', 'fonts', 'scripts', 'bower', 'images'], function(
 gulp.task('build', ['html', 'bundle']);
 
 // Default task
-gulp.task('default', ['clean', 'build']);
+gulp.task('default', ['build']);
 
 // Webserver
 gulp.task('serve', function () {
