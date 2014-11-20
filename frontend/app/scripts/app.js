@@ -6,12 +6,14 @@ var React = window.React = require('react'),
 
 var Event = React.createClass({
     render: function () {
+        var title = (
+            <h2 className="title">{this.props.title}</h2>
+        );
         return (
             <div className="event">
-                <h2 className="title">
-                    {this.props.title}
-                </h2>
+                {title}
                 {this.props.children}
+                <hr />
             </div>
         );
     }
@@ -21,7 +23,15 @@ var EventList = React.createClass({
     render: function () {
         var eventNodes = this.props.data.map(function(event, index) {
             return (
-                <Event title={event.title} key={index}>
+                <Event
+                    key={event.id}
+                    id={event.id}
+                    title={event.title} 
+                    category={event.category}
+                    startTime={event.start_time}
+                    endTime={event.end_time}
+                    collapsable={true}
+                >
                     {event.description}
                 </Event>
             );
