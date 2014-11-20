@@ -71,7 +71,7 @@ var EventBox = React.createClass({
                     <div className="navbar-header">
                         <a className="navbar-brand" href="#">TTD</a>
                     </div>
-                    <div className="nav navbar-nav navbar-right">
+                    <div className="nav navbar-nav pull-right">
                         <button type="button" className="btn btn-primary navbar-btn"
                         onClick={this.handleToggleEventForm}>
                             <span className="glyphicon glyphicon-plus"></span> Add Event
