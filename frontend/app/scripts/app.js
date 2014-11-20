@@ -7,8 +7,7 @@ var React = window.React = require('react'),
 
 // create an address to query
 // ex: gUrl = "http://0.0.0.0:3000/events"
-var urlParts = window.location.origin.split(":");
-var gUrl = urlParts[0] + ":" + urlParts[1] + ":3000/events"
+var gUrl = window.location.origin + "/events"
 
 // define the event
 var Event = React.createClass({
