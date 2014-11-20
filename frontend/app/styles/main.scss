@@ -2,9 +2,13 @@
 
 body {
     // background: #fafafa;
-    background-image: url("../images/background.jpg");
+    background: url("../images/background.jpg")  no-repeat center center fixed;
     background-repeat: no-repeat;
-    background-size: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-size: cover;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
     padding-top: 70px;
