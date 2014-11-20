@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
-var React = window.React = require('react');
+var React = window.React = require('react')
+    moment = require('moment');
 
 // define the event
 var Event = React.createClass({
@@ -23,6 +24,11 @@ var Event = React.createClass({
         var title = (
             <h2 className="title">{this.props.title}</h2>
         );
+
+        var date = moment(this.props.startTime).format('MMM Do, h:mm a');
+        var startTime = (
+            <h4 className="startTime">{date}</h4>
+        );
         var gUrl = window.location.origin + "/events"
         var url = gUrl + "/" + this.props.id + "/comments";
         // alert(url);
@@ -30,6 +36,7 @@ var Event = React.createClass({
         return (
             <div className="event">
                 {title}
+                {startTime}
                 {this.props.children}
                 <br />
                 <br />
