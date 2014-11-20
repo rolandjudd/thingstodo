@@ -1,19 +1,26 @@
 /** @jsx React.DOM */
 
+// require frontend javascript dependencies
 var React = window.React = require('react'),
     $ = require('jquery-browserify'),
     mountNode = document.getElementById('app');
 
+// create an address to query
+// ex: gUrl = "http://0.0.0.0:3000/events"
 var urlParts = window.location.origin.split(":");
 var gUrl = urlParts[0] + ":" + urlParts[1] + ":3000/events"
 
+// define the event
 var Event = React.createClass({
     render: function () {
+        // require CommentBox.js logic
         var CommentBox = require('./CommentBox');
+        // this.props = data passed from EventList
         var title = (
             <h2 className="title">{this.props.title}</h2>
         );
         var url = gUrl + "/" + this.props.id + "/comments";
+        // return dom 'event' element
         return (
             <div className="event">
                 {title}
@@ -27,12 +34,14 @@ var Event = React.createClass({
 
 var EventList = React.createClass({
     render: function () {
+        // this.props = data passed from EventBox
         var eventNodes = this.props.data.map(function(event, index) {
             return (
+                // propigate data to an <Event></Event>
                 <Event
                     key={index}
                     id={event.id}
-                    title={event.title} 
+                    title={event.title}
                     category={event.category}
                     startTime={event.start_time}
                     endTime={event.end_time}
@@ -42,8 +51,9 @@ var EventList = React.createClass({
                 </Event>
             );
         });
+        // create the eventList
         return (
-            <div className="eventList">
+            <div className="eventList card">
                 {eventNodes}
             </div>
         );
@@ -56,18 +66,22 @@ var EventList = React.createClass({
 var EventBox = React.createClass({
     loadEventsFromServer: function () {
         eventBox = this;
+        // ajax request for loading events
         $.ajax({
             url: gUrl,
             dataType: 'json',
             type: 'GET',
         })
           .done(function (data) {
+              // handle success
               eventBox.setState({data: data});
           })
           .fail(function (xhr, status, err) {
+              // handle failure
               console.error(eventBox.props.url, status, err.toString());
           });
     },
+    // handle the sumbission of an event
     handleEventSubmit: function(event) {
         var response;
         var events = this.state.data;
@@ -105,6 +119,7 @@ var EventBox = React.createClass({
         this.loadEventsFromServer();
         setInterval(this.loadEventsFromServer, this.props.pollInterval);
     },
+    // render the EventBox
     render: function () {
         EventForm = require('./EventForm');
         return (
@@ -131,9 +146,10 @@ var EventBox = React.createClass({
     }
 });
 
-
+// Document ready react load
 $(document).ready(function() {
     var events_url = window.location.origin + "/events";
     events_url = "http://localhost:3000/events";
+    // Begin recursive react render
     React.renderComponent(<EventBox url={events_url} pollInterval={15000} />, mountNode);
 });

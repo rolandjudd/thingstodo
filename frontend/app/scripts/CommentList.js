@@ -7,6 +7,7 @@ var CommentList = React.createClass({
     render: function () {
         var commentNodes;
         if (this.props.data) {
+            // commentNodes holds the data for comments
             commentNodes = this.props.data.map(function(comment, index) {
                 return (
                     <Comment key={index}>
@@ -15,6 +16,7 @@ var CommentList = React.createClass({
                 );
             });
         }
+        // return dom elements
         return (
             <div className="commentList">
                 {commentNodes}

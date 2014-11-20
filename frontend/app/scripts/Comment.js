@@ -2,6 +2,7 @@
 
 var React = window.React = require('react');
 
+// render a single content
 var Comment = React.createClass({
     render: function () {
         return (

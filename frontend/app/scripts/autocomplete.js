@@ -13,7 +13,7 @@ module.exports = React.createClass({
             navigator.geolocation.getCurrentPosition(function(position) {
                 var geolocation = new google.maps.LatLng(
                     position.coords.latitude, position.coords.longitude);
-                autocomplete.setBounds(new google.maps.LatLngBounds(geolocation, 
+                autocomplete.setBounds(new google.maps.LatLngBounds(geolocation,
                                                                     geolocation));
             });
             this.setState({autocomplete: autocomplete});

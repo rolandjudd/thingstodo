@@ -1,12 +1,14 @@
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
 
 body {
-    background: #fafafa;
+    // background: #fafafa;
+    background-image: url("../images/background.jpg");
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
     padding-top: 70px;
-    padding-left: $padding-base-horizontal;
-    padding-right: $padding-base-horizontal;
+    // removed to see sig.
+    // padding-left: $padding-base-horizontal;
+    // padding-right: $padding-base-horizontal;
 }
 
 .eventList {
@@ -33,3 +35,37 @@ body {
     z-index: 10000 !important;
     position: relative;
 }
+
+// html {
+//   position: relative;
+//   min-height: 100%;
+// }
+.footer{
+  height: 30px;
+  min-height: 30px;
+  background-color:#333;
+  .navbar-text{
+    margin-top: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+  }
+}
+
+.card {
+  padding:1.5rem;
+  box-shadow:0 1px 2px #aaa;
+  background:white;
+  margin:0 1rem 1rem;
+  border-radius:3px;
+  user-select:none;
+  // animation:fly-in-from-left .25s ease both;
+  // transform-origin:top left;
+}
+
+// @keyframes fly-in-from-left {
+//   from {
+//     transform:translateY(15rem) rotate(15deg);
+//     opacity:0;
+//   }
+// }
