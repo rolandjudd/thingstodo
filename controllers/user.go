@@ -23,6 +23,6 @@ func GetLoggedInUser(tokens oauth2.Tokens, r render.Render) {
 		panic(err)
 	}	
 
-	r.JSON(200, body)
+	return body
 
 }
