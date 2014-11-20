@@ -2,7 +2,6 @@
 
 var React = window.React = require('react'),
     Autocomplete = require('./autocomplete'),
-    ReactBootstrap = require('react-bootstrap'),
     DateRangePicker = require('react-bootstrap-daterangepicker'),
     moment = require('moment');
 
@@ -14,10 +13,10 @@ var EventForm = React.createClass({
     },
     handleSubmit: function(e) {
         e.preventDefault()
-        var title = this.refs.title.getValue().trim();
-        var description = this.refs.description.getValue().trim();
+        var title = this.refs.title.getDOMNode().value.trim();
+        var description = this.refs.description.getDOMNode().value.trim();
         var coordinates = this.state.coordinates;
-        var category = this.refs.category.getValue();
+        var category = this.refs.category.getDOMNode().value;
 
         if (!title || !description || !coordinates) {
             return;
@@ -57,14 +56,11 @@ var EventForm = React.createClass({
         var categoryInputs = categories.map(function (name, index) {
             return (<option value={name} key={index}>{name}</option>);
         });
-        var Button = ReactBootstrap.Button,
-            Input = ReactBootstrap.Input,
-            ButtonToolbar = ReactBootstrap.ButtonToolbar;
 
         return (
-            <form className="eventForm" onSubmit={this.handleSubmit}>
-                <Input type="text" placeholder="Event title" ref="title" required />
-                <Input type="text" placeholder="Event description" ref="description" required />
+            <form className="eventForm container" onSubmit={this.handleSubmit}>
+                <input type="text" placeholder="Event title" ref="title" required />
+                <input type="text" placeholder="Event description" ref="description" required />
                 <Autocomplete onUserInput={this.handleAutocomplete} ref="autocomplete"required />
                 <DateRangePicker startDate={moment()} endDate={moment().add(1, 'days')} 
                     timePicker={true} onApply={this.handleDate}>
@@ -72,10 +68,10 @@ var EventForm = React.createClass({
                         <span className="glyphicon glyphicon-calendar"></span> {label}
                     </div>
                 </DateRangePicker>
-                <Input type="select" ref="category">
+                <select ref="category">
                     {categoryInputs}
-                </Input>
-                <Input type="submit" bsStyle="primary" value="Submit" />
+                </select>
+                <input type="submit" value="Submit" />
             </form>
         );
     }

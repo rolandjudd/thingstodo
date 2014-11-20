@@ -2,7 +2,6 @@
 
 var React = window.React = require('react'),
     $ = require('jquery-browserify'),
-    ReactBootstrap = require('react-bootstrap'),
     mountNode = document.getElementById('app');
 
 var Event = React.createClass({
