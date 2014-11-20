@@ -37,7 +37,7 @@ func NewServer(databaseName string) *martini.ClassicMartini {
 	m.Use(oauth2.Google(
 		goauth2.Client(c.Client_Id, c.Client_Secret),
 		goauth2.RedirectURL(c.OAuth_Callback),
-		goauth2.Scope("profile"),
+		goauth2.Scope("email"),
 	))
 
 	// Static Assets
