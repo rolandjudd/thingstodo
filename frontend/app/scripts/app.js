@@ -134,6 +134,5 @@ var EventBox = React.createClass({
 
 $(document).ready(function() {
     var events_url = window.location.origin + "/events";
-    events_url = "http://localhost:3000/events";
     React.renderComponent(<EventBox url={events_url} pollInterval={15000} />, mountNode);
 });
