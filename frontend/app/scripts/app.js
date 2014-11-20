@@ -4,15 +4,21 @@ var React = window.React = require('react'),
     $ = require('jquery-browserify'),
     mountNode = document.getElementById('app');
 
+var urlParts = window.location.origin.split(":");
+var gUrl = urlParts[0] + ":" + urlParts[1] + ":3000/events"
+
 var Event = React.createClass({
     render: function () {
+        var CommentBox = require('./CommentBox');
         var title = (
             <h2 className="title">{this.props.title}</h2>
         );
+        var url = gUrl + "/" + this.props.id + "/comments";
         return (
             <div className="event">
                 {title}
                 {this.props.children}
+                <CommentBox url={url} />
                 <hr />
             </div>
         );
@@ -24,7 +30,7 @@ var EventList = React.createClass({
         var eventNodes = this.props.data.map(function(event, index) {
             return (
                 <Event
-                    key={event.id}
+                    key={index}
                     id={event.id}
                     title={event.title} 
                     category={event.category}
@@ -51,7 +57,7 @@ var EventBox = React.createClass({
     loadEventsFromServer: function () {
         eventBox = this;
         $.ajax({
-            url: this.props.url,
+            url: gUrl,
             dataType: 'json',
             type: 'GET',
         })
@@ -70,7 +76,7 @@ var EventBox = React.createClass({
         this.setState({data: events}, function() {
             eventBox = this;
             $.ajax({
-                url: this.props.url,
+                url: gUrl,
                 dataType: 'json',
                 type: 'POST',
                 data: JSON.stringify(event),
@@ -127,6 +133,7 @@ var EventBox = React.createClass({
 
 
 $(document).ready(function() {
-    var events_url = window.location.origin + "/events"
+    var events_url = window.location.origin + "/events";
+    events_url = "http://localhost:3000/events";
     React.renderComponent(<EventBox url={events_url} pollInterval={15000} />, mountNode);
 });
