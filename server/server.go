@@ -51,11 +51,9 @@ func NewServer(databaseName string) *martini.ClassicMartini {
 	// Setup comment routes
 	m.Get(`/events/:event_id/comments`, controllers.GetAllComments)
 	m.Post(`/events/:event_id/comments`, binding.Json(models.Comment{}), binding.ErrorHandler, controllers.AddComment)
-
-	// Temporary route for oauth testing
-	m.Get("/users", oauth2.LoginRequired, func(tokens oauth2.Tokens) string {
-		return tokens.Access()
-	})
+	
+	// User route for Oauth
+	m.Get(`/users`,  oauth2.LoginRequired, controllers.GetLoggedInUser)
 
 	// TODO Update, Delete for events
 	//m.Put(`/events/:id`, UpdateEvent)
