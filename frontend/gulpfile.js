@@ -95,7 +95,7 @@ gulp.task('bundle', ['styles', 'fonts', 'scripts', 'bower', 'images'], function(
 gulp.task('build', ['html', 'bundle']);
 
 // Default task
-gulp.task('default', ['clean', 'build']);
+gulp.task('default', ['build']);
 
 // Webserver
 gulp.task('serve', function () {
