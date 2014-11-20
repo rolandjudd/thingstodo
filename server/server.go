@@ -46,7 +46,7 @@ func NewServer(databaseName string) *martini.ClassicMartini {
 	// Setup event routes
 	m.Get(`/events`, controllers.GetAllEvents)
 	m.Get(`/events/:id`, controllers.GetEvent)
-	m.Post(`/events`, oauth2.LoginRequired, binding.Json(models.Event{}), binding.ErrorHandler, controllers.AddEvent)
+	m.Post(`/events`, binding.Json(models.Event{}), binding.ErrorHandler, controllers.AddEvent)
 
 	// Setup comment routes
 	m.Get(`/events/:event_id/comments`, controllers.GetAllComments)
