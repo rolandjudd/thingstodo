@@ -37,7 +37,7 @@ func NewServer(databaseName string) *martini.ClassicMartini {
 	m.Use(oauth2.Google(
 		goauth2.Client(c.Client_Id, c.Client_Secret),
 		goauth2.RedirectURL(c.OAuth_Callback),
-		goauth2.Scope("profile"),
+		goauth2.Scope("email"),
 	))
 
 	// Static Assets
@@ -46,16 +46,14 @@ func NewServer(databaseName string) *martini.ClassicMartini {
 	// Setup event routes
 	m.Get(`/events`, controllers.GetAllEvents)
 	m.Get(`/events/:id`, controllers.GetEvent)
-	m.Post(`/events`, oauth2.LoginRequired, binding.Json(models.Event{}), binding.ErrorHandler, controllers.AddEvent)
+	m.Post(`/events`, binding.Json(models.Event{}), binding.ErrorHandler, controllers.AddEvent)
 
 	// Setup comment routes
 	m.Get(`/events/:event_id/comments`, controllers.GetAllComments)
 	m.Post(`/events/:event_id/comments`, binding.Json(models.Comment{}), binding.ErrorHandler, controllers.AddComment)
-
-	// Temporary route for oauth testing
-	m.Get("/users", oauth2.LoginRequired, func(tokens oauth2.Tokens) string {
-		return tokens.Access()
-	})
+	
+	// User route for Oauth
+	m.Get(`/users`,  oauth2.LoginRequired, controllers.GetLoggedInUser)
 
 	// TODO Update, Delete for events
 	//m.Put(`/events/:id`, UpdateEvent)
