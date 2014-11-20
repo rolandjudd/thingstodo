@@ -13,7 +13,7 @@ var Event = React.createClass({
         );
         var gUrl = window.location.origin + "/events"
         var url = gUrl + "/" + this.props.id + "/comments";
-        alert(url);
+        // alert(url);
         // return dom 'event' element
         return (
             <div className="event">
