@@ -8,7 +8,7 @@ import (
 )
 
 // Get the logged in user
-func GetLoggedInUser(tokens oauth2.Tokens, r render.Render) { 
+func GetLoggedInUser(tokens oauth2.Tokens, r render.Render) (int,string) { 
 	
 	var url = "https://www.googleapis.com/plus/v1/people/me?access_token=" + tokens.Access()
 	
@@ -23,6 +23,5 @@ func GetLoggedInUser(tokens oauth2.Tokens, r render.Render) {
 		panic(err)
 	}	
 
-	return body
-
+	return 200, string(body)
 }
