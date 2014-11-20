@@ -4,6 +4,7 @@ import (
 	"github.com/codegangsta/martini-contrib/render"
 	"github.com/martini-contrib/oauth2"
 	"net/http"
+	"io/ioutil"
 )
 
 // Get the logged in user
@@ -16,6 +17,12 @@ func GetLoggedInUser(tokens oauth2.Tokens, r render.Render) {
 		panic(err)
 	}
 
-	r.JSON(200, resp)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}	
+
+	r.JSON(200, body)
 
 }
