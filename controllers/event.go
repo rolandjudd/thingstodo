@@ -14,7 +14,14 @@ import (
 func GetAllEvents(db *mgo.Database, r render.Render) {
 
 	var events []models.Event
-	err := db.C("events").Find(bson.M{}).All(&events)
+
+	// Only display events that haven't ended, and sort by end_time
+	err := db.C("events").Find(bson.M{
+		"end_time": bson.M{
+			"$gt": time.Now().UTC(),
+		},
+	}).Sort("-end_time").All(&events)
+
 	if err != nil {
 		panic(err)
 	}
