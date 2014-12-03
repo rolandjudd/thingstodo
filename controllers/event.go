@@ -20,7 +20,7 @@ func GetAllEvents(db *mgo.Database, r render.Render) {
 		"end_time": bson.M{
 			"$gt": time.Now().UTC(),
 		},
-	}).Sort("-end_time").All(&events)
+	}).Sort("start_time").All(&events)
 
 	if err != nil {
 		panic(err)
