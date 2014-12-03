@@ -9,5 +9,5 @@ var React = window.React = require('react'),
 // Document ready react load
 $(document).ready(function() {
     var events_url = window.location.origin + "/events";
-    React.renderComponent(<EventBox url={events_url} pollInterval={15000} />, mountNode);
+    React.renderComponent(<EventBox url={events_url} pollInterval={5000} />, mountNode);
 });

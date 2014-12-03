@@ -43,7 +43,7 @@ var Event = React.createClass({
                 <button type="button" className="btn btn-default btn-xs" onClick={this.handleToggleComments}>
                     Comments
                 </button>
-                {this.state.comments ? <CommentBox eventId={this.props.id} url={url} /> : null}
+                {this.state.comments ? <CommentBox eventId={this.props.id} url={url} pollInterval={1000} /> : null}
                 <hr />
             </div>
         );
